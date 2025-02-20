@@ -8,8 +8,8 @@ let inGame = false;
 let pieceInGame;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const piezas = document.querySelectorAll('.piece');
-    if (!piezas.length) {
+    const pieces = document.querySelectorAll('.piece');
+    if (!pieces.length) {
         console.error("Error: No se encontraron elementos con la clase 'piece'");
         return;
     }
@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .sort(() => Math.random() - 0.5); // Mezclar aleatoriamente
            
         duplicateObjects.forEach((objeto, index) => {
-            if (piezas[index]) {
-                piezas[index].dataset.imagen = objeto.imagen;
-                piezas[index].dataset.objetoId = objeto.id;
+            if (pieces[index]) {
+                pieces[index].dataset.imagen = objeto.imagen;
+                pieces[index].dataset.objetoId = objeto.id;
             }
         });
     };
