@@ -1,11 +1,54 @@
 body{
+    font-family: 'Poppins', sans-serif;
     height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgb(28, 25, 25);
+    flex-direction: column;
 }
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10;
+}
+
+#title {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+#playButton {
+  font-size: 24px;
+  padding: 15px 30px;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#restartButton {
+  font-size: 24px;
+  padding: 15px 30px;
+  margin: 20px;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  cursor: pointer;
+  display: none;
+  
+}
+
+
 .board{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -24,8 +67,14 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-image: none;
-   
+    cursor: pointer;
   }
+  
+  .piece:hover {
+    transform: rotateY(180deg); /* Voltear la pieza al pasar el mouse */
+    opacity: 0.5;
+  }
+    
   
   .piece-show {
     transform: rotateY(180deg); /* Voltear la pieza */

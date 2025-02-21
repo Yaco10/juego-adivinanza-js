@@ -5,7 +5,11 @@ const objects = [
     { id: 'objeto4', imagen: 'url(./img/gatito.jpg)', },
 ];
 let inGame = false;
+let blockClick = false;
 let pieceInGame;
+let play = true;
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const pieces = document.querySelectorAll('.piece');
@@ -25,9 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-
-    assignImg(); 
-    getEquals();// Llamamos la función dentro de DOMContentLoaded
+        jugar();
+        assignImg(); 
+        getEquals();
+    
+    // Llamamos la función dentro de DOMContentLoaded
 });
 
 function getEquals(){
@@ -35,25 +41,30 @@ function getEquals(){
 
     pieces.forEach(piece => {
         piece.addEventListener('click', () => {
+            if(blockClick === true) return;
+
             if(inGame === false){
-                console.log('en si');
                 showPiece(piece);
                 inGame = true;
                 pieceInGame = piece;
             }
             else{
-                console.log('en no');
                 showPiece(piece);
                 if(pieceInGame.dataset.objetoId === piece.dataset.objetoId){
-                    console.log('ganaste son iguales');
+                    piece.dataset.win = 'true';
+                    pieceInGame.dataset.win = 'true';
+                    verifyWin();
                     inGame = false;
                     pieceInGame = null;
                 }
                 else{
-                    inGame = false;
+                    blockClick = true;
+
                     setTimeout(() => {
                         hiddenPiece(pieceInGame,piece)
                         pieceInGame = null;
+                        inGame = false;
+                        blockClick = false
                     }, 1000);
                     
 
@@ -70,4 +81,49 @@ function showPiece(piece){
 function hiddenPiece(piece, piece2){
     piece.style.backgroundImage = 'none';
     piece2.style.backgroundImage = 'none';
+}
+
+const verifyWin = () => {
+    const pieces = document.querySelectorAll('.piece');
+    let win = 0;
+    pieces.forEach(piece => {
+        if(piece.dataset.win === 'true'){
+            win += 1;
+        }
+    });
+    if(win === 8){
+        alert('Ganaste');
+        document.getElementById("restartButton").style.display = "block";
+        restart();
+    }
+}
+
+const jugar = () => {
+    document.getElementById("playButton").addEventListener("click", () => {
+        document.getElementById("overlay").style.display = "none";
+    });
+}
+
+const restart = () => {
+    document.getElementById("restartButton").addEventListener("click", () => {
+        // Resetear el estado del juego
+        inGame = false;
+        blockClick = false;
+        pieceInGame = null;
+        play = true;
+
+        // Ocultar las piezas y el botón de reinicio
+        document.querySelectorAll('.piece').forEach(piece => {
+            piece.style.backgroundImage = 'none';
+            piece.dataset.win = ''; // Limpiar el estado de la victoria
+        });
+
+        document.getElementById("restartButton").style.display = "none";
+
+        // Volver a asignar las imágenes y barajar
+        assignImg();
+
+        // Opcional: Reiniciar la lógica del juego, como el contador de victorias
+        getEquals();
+    });
 }
