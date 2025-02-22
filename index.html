@@ -9,19 +9,23 @@
 </head>
 <body>
     <div id="overlay">
-        <h1 id="title">Juego de Adivinanza</h1>
+        <h1 id="interface-title">Juego de Memoria</h1>
         <button id="playButton">Jugar</button>
     </div>
-
+    <h1 id="game-title">Juego de Memoria</h1>
     <div class="board">
-        <div class="piece" id="piece1"></div>
-        <div class="piece" id="piece2"></div>
-        <div class="piece" id="piece3"></div>
-        <div class="piece" id="piece4"></div>
-        <div class="piece" id="piece5"></div>
-        <div class="piece" id="piece6"></div>
-        <div class="piece" id="piece7"></div>
-        <div class="piece" id="piece8"></div>
+        <div class="piece piece-hidden" id="piece1"></div>
+        <div class="piece piece-hidden" id="piece2"></div>
+        <div class="piece piece-hidden" id="piece3"></div>
+        <div class="piece piece-hidden" id="piece4"></div>
+        <div class="piece piece-hidden" id="piece5"></div>
+        <div class="piece piece-hidden" id="piece6"></div>
+        <div class="piece piece-hidden" id="piece7"></div>
+        <div class="piece piece-hidden" id="piece8"></div>
+    </div>
+    <div class="status-board">
+        <h2>Aciertos:</h2>
+        <h2>Intentos:</h2>
     </div>
 
     <button id="restartButton">Reiniciar</button>
