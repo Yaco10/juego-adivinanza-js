@@ -31,8 +31,10 @@ const initGame = () => {
 };
 
 const assignImages = (pieces) => {
-  const shuffledObjects = [...objects, ...objects].sort(() => Math.random() - 0.5);
-  
+  const shuffledObjects = [...objects, ...objects].sort(
+    () => Math.random() - 0.5
+  );
+
   shuffledObjects.forEach((objeto, index) => {
     if (pieces[index]) {
       pieces[index].innerHTML = `<img src='${objeto.imagen}' />`;
@@ -65,7 +67,10 @@ const handlePieceClick = (piece) => {
 };
 
 const checkMatch = (piece) => {
-  if (gameState.pieceInGame && gameState.pieceInGame.dataset.objetoId === piece.dataset.objetoId) {
+  if (
+    gameState.pieceInGame &&
+    gameState.pieceInGame.dataset.objetoId === piece.dataset.objetoId
+  ) {
     piece.dataset.win = "true";
     gameState.pieceInGame.dataset.win = "true";
     verifyWin();
@@ -83,15 +88,14 @@ const checkMatch = (piece) => {
       gameState.pieceInGame = null;
     }, 1000);
   }
-
-  
 };
-
 
 const verifyWin = () => {
   const pieces = document.querySelectorAll(".piece");
-  const matchedPieces = [...pieces].filter(piece => piece.dataset.win === "true");
-  
+  const matchedPieces = [...pieces].filter(
+    (piece) => piece.dataset.win === "true"
+  );
+
   if (matchedPieces.length === pieces.length) {
     alert("¡Ganaste!");
     document.getElementById("restartButton").style.display = "block";
@@ -129,7 +133,12 @@ const setupRestartButton = () => {
 };
 
 const restartGame = () => {
-  Object.assign(gameState, { inGame: false, blockClick: false, pieceInGame: null, play: true });
+  Object.assign(gameState, {
+    inGame: false,
+    blockClick: false,
+    pieceInGame: null,
+    play: true,
+  });
   document.getElementById("restartButton").style.display = "none";
   initGame();
 };
