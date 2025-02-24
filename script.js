@@ -200,5 +200,6 @@ const restartGame = () => {
   });
   document.getElementById("restartButton").style.display = "none";
   document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlay").style.display = "flex";
   setupLevelButtons();  // Vuelve a habilitar la selección de nivel
 };
