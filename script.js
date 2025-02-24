@@ -3,38 +3,99 @@ const objects = [
   { id: "objeto2", imagen: "./img/loro.jpg" },
   { id: "objeto3", imagen: "./img/sapo.jpg" },
   { id: "objeto4", imagen: "./img/gatito.jpg" },
+  { id: "objeto5", imagen: "./img/cebra.jpg" },
+  { id: "objeto6", imagen: "./img/lobo.jpg" },
 ];
 
 let gameState = {
+  selectLevel: null,
+  gridBoard: null,
   inGame: false,
   blockClick: false,
   pieceInGame: null,
-  play: true,
+  play: false,  
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  initGame();
+  setupLevelButtons();
   setupPlayButton();
   setupRestartButton();
 });
 
-const initGame = () => {
-  const pieces = document.querySelectorAll(".piece");
-  if (!pieces.length) {
-    console.error("Error: No se encontraron elementos con la clase 'piece'");
-    return;
-  }
+//SET - UP
+const setupLevelButtons = () => {
+  const levelButtons = document.querySelectorAll(".level-button");
 
+  levelButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      levelButtons.forEach((btn) => btn.classList.remove("selected"));
+      button.classList.add("selected");
+      gameState.gridBoard = button.id;
+      obtainLevel(button.id);
+    });
+  });
+};
+
+const setupPlayButton = () => {
+  const playButton = document.getElementById("playButton");
+  playButton.addEventListener("click", () => {
+    if (gameState.selectLevel) {
+      gameState.play = true;  
+      document.getElementById("overlay").style.display = "none";
+      createBoard();  
+    } else {
+      alert("Por favor, selecciona un nivel antes de jugar.");
+    }
+  });
+};
+
+
+const obtainLevel = (stringLevel) => {
+  const [num1, num2] = stringLevel.split("x").map(Number);
+  const mult = num1 * num2;
+  const result = mult / 2;
+  gameState.selectLevel = result;  
+};
+
+
+const createBoard = () => {
+  const shuffledObjects = shuffleArray(objects, gameState.selectLevel );
+  console.log(shuffledObjects);
+  assignPieces(shuffledObjects);
+  const pieces = document.querySelectorAll(".piece");
+  assignGridBoard();
   resetBoard(pieces);
-  assignImages(pieces);
+  assignImages(pieces, shuffledObjects);
   assignClickEvents(pieces);
 };
 
-const assignImages = (pieces) => {
-  const shuffledObjects = [...objects, ...objects].sort(
+const assignGridBoard = () => {
+  const board = document.getElementsByClassName('board')[0];
+  const [num1, num2] = gameState.gridBoard.split("x").map(Number);
+  board.style.gridTemplateColumns = `repeat(${num2}, 1fr)`;
+  board.style.gridTemplateRows = `repeat(${num1}, 1fr)`;
+}
+
+
+const shuffleArray = (array, levelIndex) => {
+  const slicedArray = array.slice(0, levelIndex);
+  const shuffledObjects = [...slicedArray, ...slicedArray].sort(
     () => Math.random() - 0.5
   );
+  return shuffledObjects;
+};
 
+const assignPieces = (shuffledObjects) => {
+  const board = document.getElementById("board");
+  board.innerHTML = shuffledObjects
+    .map(
+      (object, index) => `<div id="piece-${index}" class="piece piece-hidden"></div>`
+    )
+    .join(""); // Le saca la , debido que es un array
+};
+
+
+const assignImages = (pieces, shuffledObjects) => {
   shuffledObjects.forEach((objeto, index) => {
     if (pieces[index]) {
       pieces[index].innerHTML = `<img src='${objeto.imagen}' />`;
@@ -53,6 +114,7 @@ const assignClickEvents = (pieces) => {
   });
 };
 
+//IN GAME
 const handlePieceClick = (piece) => {
   if (gameState.blockClick) return;
 
@@ -78,7 +140,7 @@ const checkMatch = (piece) => {
     gameState.inGame = false;
     gameState.pieceInGame = null;
   } else {
-    gameState.blockClick = true; // Bloqueamos clics mientras se da vuelta la carta
+    gameState.blockClick = true;
 
     setTimeout(() => {
       hidePiece(piece);
@@ -112,6 +174,7 @@ const hidePiece = (piece) => {
   piece?.classList.add("piece-hidden");
 };
 
+
 const resetBoard = (pieces) => {
   pieces.forEach((piece) => {
     piece.innerHTML = "";
@@ -121,24 +184,21 @@ const resetBoard = (pieces) => {
   });
 };
 
-const setupPlayButton = () => {
-  document.getElementById("playButton").addEventListener("click", () => {
-    document.getElementById("overlay").style.display = "none";
-  });
-};
 
 const setupRestartButton = () => {
   const restartButton = document.getElementById("restartButton");
   restartButton.addEventListener("click", restartGame);
 };
 
+
 const restartGame = () => {
   Object.assign(gameState, {
     inGame: false,
     blockClick: false,
     pieceInGame: null,
-    play: true,
+    play: false,
   });
   document.getElementById("restartButton").style.display = "none";
-  initGame();
+  document.getElementById("overlay").style.display = "block";
+  setupLevelButtons();  // Vuelve a habilitar la selección de nivel
 };

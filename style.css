@@ -53,6 +53,45 @@ body {
   color: black;
 }
 
+#level-text {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #bdbdbd;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.level-buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-button{
+  font-size: 12px;
+  padding: 5px 20px;
+  margin: 10px;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: black;
+  border-color: white;
+  color: white;
+  font-size: bold;
+}
+
+.level-button:hover {
+  background-color: white;
+  color: black;
+}
+
+.level-button.selected{
+  background-color: white;
+  color: black;
+}
+
 #restartButton {
   font-size: 24px;
   padding: 15px 30px;
