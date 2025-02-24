@@ -3,6 +3,11 @@
 ## Descripción
 Este es un simple juego de memoria desarrollado en JavaScript, donde el jugador debe seleccionar 2 cartas de un tablero y estas deben ser iguales
 
+## Presentacion
+
+
+
+
 ## Características
 - Generacion de posiciones aleatorias
 - Jugabilidad con click de usuario para seleccionar las cartas
