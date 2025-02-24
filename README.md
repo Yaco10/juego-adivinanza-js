@@ -4,8 +4,7 @@
 Este es un simple juego de memoria desarrollado en JavaScript, donde el jugador debe seleccionar 2 cartas de un tablero y estas deben ser iguales
 
 ## Presentacion
-![image](https://github.com/user-attachments/assets/fcea208c-b441-46bb-ab11-5ecee9afbf51)
-![image](https://github.com/user-attachments/assets/da7b5e08-a6d1-42da-877c-83b4c4243393)
+
 
 
 
